@@ -1,0 +1,2 @@
+opentracing.jaeger.udp-sender.host=jaeger
+spring.kafka.consumer.bootstrap-servers: kafkad:9092

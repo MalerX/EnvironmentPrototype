@@ -1,5 +1,37 @@
 version: "3.4"
 services:
+  zookeeperd:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181"
+    hostname: zookeeperd
+  kafkad:
+    image: wurstmeister/kafka
+    command: [start-kafka.sh]
+    container_name: kafkad
+    ports:
+      - "9092:9092"
+    hostname: kafkad
+    environment:
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_ADVERTISED_HOST_NAME: kafkad
+      KAFKA_ZOOKEEPER_CONNECT: zookeeperd:2181
+      KAFKA_ADVERTISED_PORT: 9092
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - "zookeeperd"
+  kafka-uid:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-uid
+    ports:
+      - "8088:8080"
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafkad:9092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeperd:2181
+      - KAFKA_CLUSTERS_0_READONLY=false
   animal-name-service:
     image: com.example/animal-name-service:0.1.0
     restart: on-failure
