@@ -2,7 +2,6 @@ package com.example.ngs;
 
 import com.example.ngs.kafka.ConsumerServ;
 import com.example.ngs.kafka.ProducerServ;
-import io.opentelemetry.trace.Tracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +32,6 @@ class NameResource {
     @Autowired
     private ProducerServ producer;
 
-    @Autowired
-    private Tracer tracer;
-
-
     @GetMapping(path = "/random")
     public String name() throws Exception {
         String scientist = "",
@@ -53,6 +48,8 @@ class NameResource {
         log.info("Send request scientist name");
 
         Thread.sleep(1000);
+
+
 
         scientist = consumer.getQueue().take();
         log.info("Name={} from service ScientistNames success receive.", animal);
