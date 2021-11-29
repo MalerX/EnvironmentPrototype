@@ -12,9 +12,3 @@ spring:
       bootstrap-servers: kafkad:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-#otel:
-#  traces:
-#    exporter: jaeger
-#  exporter:
-#    jaeger:
-#      endpoint: jaeger:14250
