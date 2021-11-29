@@ -3,7 +3,6 @@ package com.example.ngs;
 import com.example.ngs.kafka.ConsumerServ;
 import com.example.ngs.kafka.ProducerServ;
 import io.opentelemetry.api.trace.Span;
-import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.extension.annotations.WithSpan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
