@@ -1,5 +1,7 @@
 package com.example.ngs.kafka;
 
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.extension.annotations.WithSpan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,6 +2,9 @@ package com.example.ngs;
 
 import com.example.ngs.kafka.ConsumerServ;
 import com.example.ngs.kafka.ProducerServ;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.extension.annotations.WithSpan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,7 @@ class NameResource {
     @Autowired
     private ProducerServ producer;
 
+    @WithSpan
     @GetMapping(path = "/random")
     public String name() throws Exception {
         String scientist = "",
@@ -40,8 +44,8 @@ class NameResource {
         producer.sendRequestAnimal();
         log.info("Send request animal name");
 
-
         animal = consumer.getQueue().take();
+        Span.current().setAttribute("Animal name:", animal);
         log.info("Name={} from service AnimalNames success receive.", animal);
 
         producer.sendRequestScientist();
@@ -50,8 +54,8 @@ class NameResource {
         Thread.sleep(1000);
 
 
-
         scientist = consumer.getQueue().take();
+        Span.current().setAttribute("Scientist name:", scientist);
         log.info("Name={} from service ScientistNames success receive.", animal);
 
         String name = toKebabCase(scientist) + "-" + toKebabCase(animal);
