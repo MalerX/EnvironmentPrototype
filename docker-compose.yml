@@ -38,6 +38,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - SPRING_APPLICATION_NAME=animal-name-service
+      - OTEL_SERVICE_NAME=animalNameService
       - OTEL_TRACES_EXPORTER=jaeger
       - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14250
   scientist-name-service:
@@ -46,6 +47,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - SPRING_APPLICATION_NAME=scientist-name-service
+      - OTEL_SERVICE_NAME=scientistNameService
       - OTEL_TRACES_EXPORTER=jaeger
       - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14250
   name-generator-service:
@@ -54,11 +56,12 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - SPRING_APPLICATION_NAME=name-generator-service
+      - OTEL_SERVICE_NAME=nameGeneratorService
       - OTEL_TRACES_EXPORTER=jaeger
       - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14250
     ports:
       - "8080:8080"
   jaeger:
-    image: jaegertracing/all-in-one:1.17
+    image: jaegertracing/all-in-one:1.28.0
     ports:
       - 9090:16686
