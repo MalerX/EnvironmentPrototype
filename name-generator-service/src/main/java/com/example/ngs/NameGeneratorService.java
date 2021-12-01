@@ -42,16 +42,13 @@ class NameResource {
 
         producer.sendRequestAnimal();
         log.info("Send request animal name");
+        producer.sendRequestScientist();
+        log.info("Send request scientist name");
+
 
         animal = consumer.getQueue().take();
         Span.current().setAttribute("Animal name:", animal);
         log.info("Name={} from service AnimalNames success receive.", animal);
-
-        producer.sendRequestScientist();
-        log.info("Send request scientist name");
-
-        Thread.sleep(1000);
-
 
         scientist = consumer.getQueue().take();
         Span.current().setAttribute("Scientist name:", scientist);
