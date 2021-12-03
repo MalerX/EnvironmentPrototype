@@ -19,7 +19,7 @@ public class ConsumerServ {
     private static final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    @KafkaListener(topics = "generator_names", groupId = "name_gen")
+    @KafkaListener(topics = "generator_names", groupId = "firstService")
     public void consume(ConsumerRecord<String, String> record) {
         log.info("Receive name={} from topic={}", record.value(), record.topic());
         try {

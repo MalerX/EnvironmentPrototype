@@ -23,7 +23,7 @@ public class ConsumerScientist {
     @Autowired
     private NameService nameService;
 
-    @KafkaListener(topics = "scientist", groupId = "group_id")
+    @KafkaListener(topics = "scientist", groupId = "secondServices")
     public void consume(String message) {
         log.info("Received request name scientist. {}", message);
         String nameScientist = nameService.name();

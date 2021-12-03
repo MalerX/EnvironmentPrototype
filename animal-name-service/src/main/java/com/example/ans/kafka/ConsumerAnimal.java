@@ -24,7 +24,7 @@ public class ConsumerAnimal {
     @Autowired
     private AnimalNameResource nameService;
 
-    @KafkaListener(topics = "animal", groupId = "group_id")
+    @KafkaListener(topics = "animal", groupId = "secondServices")
     public void consume(String message) {
         log.info("Received request name animal. {}", message);
         String nameAnimal = nameService.name();
