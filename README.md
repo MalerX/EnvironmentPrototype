@@ -14,7 +14,7 @@ javaagent_. Так же выполняется автоматический сб
 - Kafka-UI -- **_localhost:8088_**
 - ClickHouse (через clickhouse-client) -- **_localhost:8087_**
 
-##### Для установки и подключения к СУБД ClickHouse при помощи clickhouse-client** необходимо выполнить следующие шаги:
+#### Для установки и подключения к СУБД ClickHouse при помощи _clickhouse-client_ необходимо выполнить следующие шаги:
 
 - Установить clickhouse-client на хостовую машину: **_sudo apt install clickhouse-client_**
 - Выполнить подключение: **_clickhouse-client --host localhost --port 8087_**
