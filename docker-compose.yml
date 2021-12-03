@@ -7,7 +7,7 @@ services:
     hostname: zookeeperd
   kafkad:
     image: wurstmeister/kafka
-    command: [start-kafka.sh]
+    command: [ start-kafka.sh ]
     container_name: kafkad
     ports:
       - "9092:9092"
@@ -17,7 +17,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: kafkad
       KAFKA_ZOOKEEPER_CONNECT: zookeeperd:2181
       KAFKA_ADVERTISED_PORT: 9092
-#      KAFKA_CREATE_TOPICS: "animal,scientist,generator_names"
+    #      KAFKA_CREATE_TOPICS: "animal,scientist,generator_names"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
@@ -63,12 +63,12 @@ services:
     ports:
       - "8080:8080"
 
-#Сбор телеметрии.
+  #Сбор телеметрии.
   jaeger:
     image: jaegertracing/all-in-one:1.28.0
     ports:
       - "9090:16686"
-#ClickHouse, бэкап данных из топиков.
+  #ClickHouse, бэкап данных из топиков.
   clickhoused:
     image: clickhouse/clickhouse-server
     restart: on-failure
@@ -77,9 +77,8 @@ services:
     ports:
       - "9099:9000"
 
-#Прикрутить GUI не вышло. Но он особо-то и не нужен. Есть clickhouse-client -- консольный клиент.
-#Подключение: установить клиент на хостовую машину: sudo apt install clickhouse-client
-#Затем выполнить команду: clickhouse-client --host localhost --port 9099
+#Прикрутить GUI не вышло. Нужно подобрать другой.
+#Работает clickhouse-client -- консольный клиент (установку и подключение см. в README.md).
 #  tabix-ui:
 #    image: spoonest/clickhouse-tabix-web-client
 #    restart: on-failure
