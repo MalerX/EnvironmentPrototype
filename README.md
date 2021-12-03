@@ -1,3 +1,15 @@
-# opentracing-microservices-example
+Прототип окружения из 3 микросервисов, общающихся между собой через брокер сообщений Apache Kafka. Сбор телеметрии
+выполняется по стандарту OpenTelemetry, библиотекой OpenTelemetry Instrumentation for Java, подключённой как javaagent.
+Так же выполняется автоматический сбор данных из топиков Kafka и бэкап в БД ClickHouse, при помощи встроенных
+инструментов СУБД ClickHouse. Микросервисы и окружение запускаются в индивидуальных Docker-контейнерах под управлением
+Docker-compose.
 
-This is source code for blog [Jaeger Integration With Spring Boot Application](https://medium.com/xebia-engineering/jaeger-integration-with-spring-boot-application-3c6ec4a96a6f).
+Доступ к окружению возможен по адресам:
+
+- Jaeger -- localhost:8089;
+- Kafka-UI -- localhost:8088;
+- ClickHouse (через clickhouse-client) -- localhost:8087;
+
+В данном репозитории можно найти примеры конфигурационных файлов для Spring Boot приложений с параметрами для запуска и
+конфигурации продюсером/консюмеров Kafka (application.yaml), Dockerfile и docker-compose.yaml для конфигурирования и
+запуска настоящего окружения, кодовую базу микросервисов. 
