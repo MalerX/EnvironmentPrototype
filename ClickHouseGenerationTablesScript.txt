@@ -1,0 +1,81 @@
+CREATE DATABASE kafka;
+CREATE DATABASE tables;
+CREATE DATABASE consumers;
+
+CREATE TABLE kafka.animal_queue
+             (
+                timestamp String,
+                requestTopic String
+             )
+    ENGINE = Kafka
+    SETTINGS kafka_broker_list = 'kafkad:9092',
+             kafka_topic_list = 'animal',
+             kafka_group_name = 'clickhouse',
+             kafka_format = 'JSONEachRow',
+             kafka_max_block_size = 1048588;
+
+CREATE TABLE kafka.scientist_queue
+             (
+                timestamp String,
+                requestTopic String
+             )
+    ENGINE = Kafka
+    SETTINGS kafka_broker_list = 'kafkad:9092',
+             kafka_topic_list = 'scientist',
+             kafka_group_name = 'clickhouse',
+             kafka_format = 'JSONEachRow',
+             kafka_max_block_size = 1048588;
+
+CREATE TABLE kafka.generator_names_queue
+             (
+                timestamp String,
+                fromTopic String,
+                name String
+             )
+    ENGINE = Kafka
+    SETTINGS kafka_broker_list = 'kafkad:9092',
+             kafka_topic_list = 'generator_names',
+             kafka_group_name = 'clickhouse',
+             kafka_format = 'JSONEachRow',
+             kafka_max_block_size = 1048588;
+
+CREATE TABLE tables.animal
+             (
+                timestamp String,
+                requestTopic String
+             )
+    ENGINE = MergeTree()
+    ORDER BY timestamp;
+
+CREATE TABLE tables.scientist
+             (
+                timestamp String,
+                requestTopic String
+             )
+    ENGINE = MergeTree()
+    ORDER BY timestamp;
+
+CREATE TABLE tables.generator_names
+             (
+                timestamp String,
+                fromTopic String,
+                name String
+             )
+    ENGINE = MergeTree()
+    ORDER BY timestamp;
+
+CREATE MATERIALIZED VIEW consumers.animal TO tables.animal AS
+SELECT * FROM kafka.animal_queue;
+
+CREATE MATERIALIZED VIEW consumers.scientist TO tables.scientist AS
+SELECT * FROM kafka.scientist_queue;
+
+CREATE MATERIALIZED VIEW consumers.generator_names TO tables.generator_names AS
+SELECT * FROM kafka.generator_names_queue;
+
+##########################################################################
+
+DROP DATABASE kafka;
+DROP DATABASE tables;
+DROP DATABASE consumers;
+
