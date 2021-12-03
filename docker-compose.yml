@@ -76,3 +76,16 @@ services:
       - kafkad
     ports:
       - "9099:9000"
+
+#Прикрутить GUI не вышло. Но он особо-то и не нужен. Есть clickhouse-client -- консольный клиент.
+#Подключение: установить клиент на хостовую машину: sudo apt install clickhouse-client
+#Затем выполнить команду: clickhouse-client --host localhost --port 9099
+#  tabix-ui:
+#    image: spoonest/clickhouse-tabix-web-client
+#    restart: on-failure
+#    depends_on:
+#      - clickhoused
+#    environment:
+#      - CH_HOST='clickhoused:9000'
+#    ports:
+#      - "9098:80"
