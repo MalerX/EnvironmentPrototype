@@ -17,6 +17,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: kafkad
       KAFKA_ZOOKEEPER_CONNECT: zookeeperd:2181
       KAFKA_ADVERTISED_PORT: 9092
+#      KAFKA_CREATE_TOPICS: "animal,scientist,generator_names"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
@@ -61,7 +62,17 @@ services:
       - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14250
     ports:
       - "8080:8080"
+
+#Сбор телеметрии.
   jaeger:
     image: jaegertracing/all-in-one:1.28.0
     ports:
-      - 9090:16686
+      - "9090:16686"
+#ClickHouse, бэкап данных из топиков.
+  clickhoused:
+    image: clickhouse/clickhouse-server
+    restart: on-failure
+    depends_on:
+      - kafkad
+    ports:
+      - "9099:9000"
