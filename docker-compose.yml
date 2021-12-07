@@ -67,7 +67,7 @@ services:
   jaeger:
     image: jaegertracing/all-in-one:1.28.0
     ports:
-      - "9090:16686"
+      - "8089:16686"
   #ClickHouse, бэкап данных из топиков.
   clickhoused:
     image: clickhouse/clickhouse-server
@@ -76,6 +76,12 @@ services:
       - kafkad
     ports:
       - "8087:9000"
+#Zabbix, мониторинг состояния микросервисов.
+  zabbixd:
+    image: zabbix/zabbix-appliance
+    restart: on-failure
+    ports:
+      - "8086:80"
 
 #Прикрутить GUI не вышло. Нужно подобрать другой.
 #Работает clickhouse-client -- консольный клиент (установку и подключение см. в README.md).
